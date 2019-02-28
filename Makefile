@@ -1,11 +1,11 @@
 compile:
 	javac $(shell ls *.java)
 
-compile/%:
+compile/%: %.java
 	javac $*.java
 
-start/%: compile/% run/%
-	echo
+start/%: compile/%
+	java $*
 
 run/%:
 	java $*
