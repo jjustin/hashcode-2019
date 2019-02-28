@@ -68,9 +68,11 @@ public class Hash {
         ArrayList<String> l = new ArrayList<String>(slike.keySet());
         ArrayList<String> a = p.tags;
         a.retainAll(tags);
-        for()
+        for(String s : a){
+            l.remove(s);
+        }
 
-        return a;
+        return l;
     }
 
     //metoda za primerjanje tagov med slikama
