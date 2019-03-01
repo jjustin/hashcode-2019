@@ -20,7 +20,6 @@ public class Hash {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt(); //stevilo vrstic/fotografij
-
         slike = new HashMap<String, ArrayList<Photo>>();
         vseSlike = new ArrayList<Photo>();
         
@@ -64,15 +63,15 @@ public class Hash {
         }
     }
 
-    public static ArrayList<String> neskupniTagi(Photo p, ArrayList<String> tags){
-        ArrayList<String> l = new ArrayList<String>(slike.keySet());
+    public static ArrayList<String> skupniTagi(Photo p, ArrayList<String> tags){
+        // ArrayList<String> l = new ArrayList<String>(slike.keySet());
         ArrayList<String> a = p.tags;
         a.retainAll(tags);
-        for(String s : a){
-            l.remove(s);
-        }
+        // for(String s : a){
+        //     l.remove(s);
+        // }
 
-        return l;
+        return a;
     }
 
     //metoda za primerjanje tagov med slikama
@@ -96,10 +95,17 @@ public class Hash {
     }
 
     public static Photo findNextPhoto(ArrayList<String> tags) {
+        Photo maxP = null;
+        
+        int maxI = tags.size();
+
         for(String tag : tags){
             ArrayList<Photo> photos = slike.get(tag);
             for(Photo s : photos){
-                if(neskupniTagi(s, tags).size() != 0 && !s.isUsed) return s;
+                if(!s.isUsed){
+                    int i = skupniTagi(s, tags).size();
+                    if(i != 0) return s;
+                }
             }
         }
 

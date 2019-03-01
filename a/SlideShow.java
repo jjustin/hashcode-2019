@@ -8,12 +8,14 @@ public class SlideShow {
    public static void add(Photo p) {
        p.isUsed = true;
        sb.append(Integer.toString(p.id) + "\n");
+    //    System.out.println(p.id );
        stVrstic++;
    }
    
    public static void add(Photo p1, Photo p2) {
        p1.isUsed = true;
        p2.isUsed = true;
+    //    System.out.println(p1.id + " " + p2.id);
 
        sb.append(Integer.toString(p1.id) + " ");
        sb.append(Integer.toString(p2.id) + "\n");
