@@ -74,26 +74,6 @@ public class Hash {
         return a;
     }
 
-    //metoda za primerjanje tagov med slikama
-    //naceloma za rabo nad V slikami
-    public static int podobnostMedSlikama(Photo slika1, Photo slika2) {
-    
-        int stTagS1 = slika1.tags.size();
-        int stTagS2 = slika2.tags.size();
-        int podobnost = 0;
-        
-        for (int i=0; i<stTagS1; i++) {
-            for (int j=0; j<stTagS2; j++) {
-                if (slika1.tags.get(i).equals(slika2.tags.get(j))) {
-                    podobnost++;
-                    break;
-                }
-                //if (podobnost >= LIMITA_PODOBNOSTI) return podobnost;
-            }
-        }
-        return podobnost;
-    }
-
     public static Photo findNextPhoto(ArrayList<String> tags) {
         Photo maxP = null;
         
