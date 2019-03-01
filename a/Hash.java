@@ -122,21 +122,22 @@ public class Hash {
     //ce najde sliko (ce ne najde taksne pa taprvo) jih zdruzi v objekt
     
     public static Photo poisciNajboljsoVertikalko(Photo slika1) {
-        int podobnost = 0;
-        int min = 1000; //neka konstanta
-        int ix = 0; //zaporedna vertikalna slika
-        for (int i=0; i<vseSlike.size() * POSPESEK; i++) {
-            if (!vseSlike.get(i).isUsed && vseSlike.get(i).vertical) {
-                podobnost = podobnostMedSlikama(slika1, vseSlike.get(i));
-                if (podobnost < min) {
-                    min = podobnost;
-                    ix = i;
-                }
-                // if (podobnost <= VERTIKALNA_LIMITA) {
-                //     return vseSlike.get(ix);
-                // }  
+        int minSize = slika1.tags.size();
+        Photo maxP = null;
+        for(Photo p : vseSlike){
+            if(p.isUsed || !p.vertical) continue;
+            int size = skupniTagi(p, slika1.tags).size();
+            if(size == 0) return p;
+            if(minSize > size) {
+                minSize = size;
+                maxP = p;
             }
         }
-        return vseSlike.get(ix);  
+        if(maxP != null) return maxP;
+
+        for(Photo p : vseSlike) {
+            if(!p.isUsed && p.vertical) return p;
+        }  
+        return null;
     }
 }
