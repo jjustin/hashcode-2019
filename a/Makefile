@@ -1,17 +1,17 @@
 compile:
-	javac $(shell ls *.java)
+	@javac $(shell ls *.java)
 
 compile/%: %.java
-	javac $*.java
+	@javac $*.java
 
 start/%: compile/%
-	java $*
+	@java $*
 
 run/%: %.class
-	java $*
+	@java $*
 
 test/%: compile/%
-	for f in $$(ls -1 *.txt | sed -e 's/\..*$$//'); do java $* < $$f.txt > $$f.out; done 
+	@for f in $$(ls -1 *.txt | sed -e 's/\..*$$//'); do java $* < $$f.txt > $$f.out; done 
 
 clean:
 	rm -rf *.out *.class

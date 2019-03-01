@@ -8,10 +8,6 @@ import javax.management.RuntimeErrorException;
  */
 public class Hash {
 
-    public static final int LIMITA_PODOBNOSTI = 5;
-    public static final int VERTIKALNA_LIMITA = 4;
-    public static final int POSPESEK = 1;
-    
     public static Map<String, ArrayList<Photo>> slike;
     public static ArrayList<Photo> vseSlike;
 
@@ -85,15 +81,16 @@ public class Hash {
                 }
                 int presek = skupniTagi(s, tags);
                 if(presek == 0) continue;
-                int slikaStTagov = s.tags.size();
-                int samoSlika = slikaStTagov - presek;
-                int samoOriginal = stTagov - presek;
-                int tocke = Math.min(samoSlika, Math.min(samoOriginal, presek));
-                // System.out.println(samoOriginal + " " + presek + " "+ slikaStTagov);
-                if(tocke > maxTock){
-                    maxP = s;
-                    maxTock = tocke;
-                }
+                else return s;
+                // int slikaStTagov = s.tags.size();
+                // int samoSlika = slikaStTagov - presek;
+                // int samoOriginal = stTagov - presek;
+                // int tocke = Math.min(samoSlika, Math.min(samoOriginal, presek));
+
+                // if(tocke > maxTock){
+                //     maxP = s;
+                //     maxTock = tocke;
+                // }
             }
         }
         if(maxP != null) {
@@ -131,4 +128,80 @@ public class Hash {
         }  
         return null;
     }
+    static public class SlideShow {
+        private static StringBuilder sb = new StringBuilder("");
+        private static int stVrstic = 0;
+    
+       public static void add(Photo p) {
+           p.isUsed = true;
+           sb.append(Integer.toString(p.id) + "\n");
+        //    System.out.println(p.id );
+           stVrstic++;
+       }
+       
+       public static void add(Photo p1, Photo p2) {
+           p1.isUsed = true;
+           p2.isUsed = true;
+        //    System.out.println(p1.id + " " + p2.id);
+    
+           sb.append(Integer.toString(p1.id) + " ");
+           sb.append(Integer.toString(p2.id) + "\n");
+           stVrstic++;
+       }
+    
+        public static void print() {
+           System.out.print(Integer.toString(stVrstic) + "\n" + sb.toString());
+        }
+       
+    
+       /* @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            if(idOne != null && idTwo != null) {
+                sb.append(one.id);
+                sb.append(" ");
+                sb.append(two.id);
+            } else if(idOne != null) {
+                sb.append(one.id);
+            } else if(idTwo != null) {
+                sb.append(two.id);
+            }
+            return sb.toString();
+        }*/
+    }
+
+    static public class Photo {
+
+        public int id;
+        public ArrayList<String> tags;
+        public boolean vertical;
+        public boolean isUsed;
+    
+        Photo(int id, ArrayList<String> tags, boolean vertical){
+            this.id = id;
+            this.tags = tags;
+            this.vertical = vertical;
+            isUsed = false;
+        }
+    
+        public boolean isVertical() {
+            return vertical;
+        }
+    
+        public boolean isUsed() {
+            return isUsed;
+        }
+    
+        public boolean contains(String a){
+            for(String s : tags){
+                if (s.equals(a)) return true;
+            }
+            return false;
+        }
+    
+        public String toString(){
+            return id + " " + Arrays.deepToString(tags.toArray()) + " " + vertical + " " + isUsed;
+        }
+    }
 }
+
