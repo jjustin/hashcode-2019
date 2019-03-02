@@ -92,6 +92,9 @@ func intersectionOfTags(prejsnjaSlika, trenutnaSlika *map[string]bool) int {
 func findNextPhoto(tags *map[string]bool) *Picture {
 	checked := map[*Picture]bool{}
 	b := len(*tags)
+	bestP := &Picture{}
+	emptyP := bestP
+	bestPoints := 0
 
 	for t := range *tags {
 		for _, p := range picturesMap[t] {
@@ -104,12 +107,20 @@ func findNextPhoto(tags *map[string]bool) *Picture {
 			}
 			i := intersectionOfTags(tags, p.Tags)
 			a := len(*p.Tags)
-			if !(i == 0 || i == a || i == b) {
+			points := min(i, min(a-i, b-i))
+			if points > 5 {
 				return p
+			}
+			if points > bestPoints {
+				bestP = p
+				bestPoints = points
 			}
 		}
 	}
 
+	if bestP != emptyP {
+		return bestP
+	}
 	for _, p := range allPictures {
 		if !p.Used {
 			return p
@@ -170,6 +181,9 @@ func findVertical(oldTags, picTags *map[string]bool) *Picture {
 			continue
 		}
 		points := min(presek, min(samoO, presekNovo))
+		if points >= 5 {
+			return p
+		}
 		if points > bestPoints {
 			bestPoints = points
 			bestP = p
